@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 cd $(dirname $0)/..
 
@@ -12,11 +12,6 @@ DOCKER_FILE=$(pwd)/.dockerfile
 
 generate_images()
 {
-    if [ "$RUN_EXEC" = "true" ]; then
-        ./scripts/build-images
-        return
-    fi
-
     IMAGE_ID=$(docker images --no-trunc -q ${DOCKER_IMAGE})
 
     if [ -e ${BUILD}/${IMAGE_ID} ]; then
@@ -33,27 +28,10 @@ generate_images()
     fi
 }
 
-if [ -x "$(which wrapdocker)" ] && ! docker info >/dev/null 2>&1; then
-    wrapdocker
-fi
-
 run ./scripts/bootstrap
-run ./scripts/test
 run --assets ./scripts/build-common --assets ./assets ./scripts/download
 run --assets ./scripts/dockerimages --assets ./scripts/build-images
+run --assets ./scripts/install
 finish
 
 generate_images
-
-reset_docker_build
-ARGS=
-for i in $(ls -d * .* | sort -u | grep -Ev '(\.|\.\.|\.dockerfile|build|dist|.git|scripts|bin|state)$'); do
-    if [ -d $i ]; then
-        run --assets $i
-    else
-        ARGS="${ARGS} $i"
-    fi
-done
-run --assets ./scripts/version --assets "${ARGS}" ./scripts/build
-run --assets ./scripts/install ./scripts/package "$@"
-finish

@@ -1,2 +1,2 @@
-FROM base
+FROM rancher/os-base
 CMD ["netconf"]

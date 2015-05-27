@@ -35,7 +35,7 @@ fi
 
 >${BUILD}/tags
 for i in scripts/dockerimages/[0-9]*; do
-    tag=$(echo $i | cut -f2 -d-)
+    tag="rancher/os-$(echo $i | cut -f2 -d-)"
     echo Building $tag
     docker build -t $tag -f $i .
     docker build -t ${tag}:${VERSION} -f $i .
