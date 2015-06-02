@@ -1,3 +1,3 @@
 FROM rancher/os-base
-COPY scripts/dockerimages/scripts/auto-format.sh /usr/sbin/
+COPY auto-format.sh /usr/sbin/
 ENTRYPOINT ["/usr/sbin/auto-format.sh"]

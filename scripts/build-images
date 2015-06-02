@@ -1,46 +1,31 @@
 #!/bin/bash
 set -e
 
-VERSION=v0.0.1
+VERSION=${VERSION:?"VERSION not set"}
+
+BASE_CONTAINER=$(docker create rancher/dind:v0.1.0)
+
+function cleanup {
+    docker rm -v ${BASE_CONTAINER}
+    echo "Bye! You've been trapped :D"
+}
+trap cleanup EXIT
 
 cd $(dirname $0)/..
 
 source scripts/build-common
 
-mkdir -p ${BUILD}/initrd ${DIST}/artifacts
+BUILD=./src/docker/00-base/build
+mkdir -p ${BUILD}
 
 echo Extracting ${ARTIFACTS}/os-base.tar.xz
 tar xJf ${ARTIFACTS}/os-base.tar.xz -C ${BUILD}
 
-tar xvf ${BUILD}/dist/kernel/*.tar -C ${BUILD}/dist/kernel
+docker cp ${BASE_CONTAINER}:/etc/ssl/certs/ca-certificates.crt src/docker/05-docker/build
 
-cp /etc/ssl/certs/ca-certificates.crt ${ARTIFACTS}/ca.crt
-cp /etc/ssl/certs/ca-certificates.crt ${BUILD}/initrd/ca.crt
-cp ${BUILD}/dist/rootfs.tar ${ARTIFACTS}
-
-rm -rf ${BUILD}/initrd/lib
-cp -rf ${BUILD}/dist/kernel/lib ${BUILD}/initrd
-cp -rf ${BUILD}/dist/kernel/headers/* ${BUILD}/initrd
-cp -f ${ARTIFACTS}/docker* ${BUILD}/initrd/docker
-chmod +x ${BUILD}/initrd/docker
-
-cp ${BUILD}/dist/kernel/boot/vmlinuz* ${DIST}/artifacts/vmlinuz
-
-tar xf ${BUILD}/dist/rootfs-static.tar -C ${BUILD}/initrd --strip-components=2 ./bin/busybox
-tar xf ${BUILD}/dist/rootfs-static.tar -C ${BUILD}/initrd --strip-components=3 ./usr/sbin/xtables-multi
-
-if ! docker info >/dev/null 2>&1 && [ -x "$(which wrapdocker)" ]; then
-    wrapdocker
-fi
-
->${BUILD}/tags
-for i in scripts/dockerimages/[0-9]*; do
+for i in src/docker/[0-9]*; do
     tag="rancher/os-$(echo $i | cut -f2 -d-)"
     echo Building $tag
-    docker build -t $tag -f $i .
-    docker build -t ${tag}:${VERSION} -f $i .
-    echo $tag >> ${BUILD}/tags
+    docker build -t ${tag} $i
+    docker tag -f ${tag} ${tag}:${VERSION}
 done
-
-echo Creating images.tar
-docker save $(<${BUILD}/tags) > ${BUILD}/initrd/images.tar

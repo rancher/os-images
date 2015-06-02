@@ -1,3 +1,0 @@
-FROM rancher/os-base
-COPY scripts/dockerimages/scripts/preload.sh  /
-CMD ["/preload.sh"]

@@ -1,5 +1,5 @@
 FROM scratch
-ADD assets/rootfs.tar /
+ADD build/dist/rootfs.tar /
 RUN ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 # Cleanup Buildroot
 RUN rm /sbin/poweroff /sbin/reboot /sbin/halt && \
@@ -30,7 +30,7 @@ RUN rm /sbin/poweroff /sbin/reboot /sbin/halt && \
     sed -i 's/\(^docker.*\)/\1rancher/g' /etc/group && \
     sed -i 's/\(^sudo.*\)/\1rancher,docker/g' /etc/group && \
     echo '%sudo ALL=(ALL) ALL' >> /etc/sudoers
-COPY scripts/dockerimages/scripts/inputrc /etc/inputrc
-COPY scripts/dockerimages/scripts/entry.sh /usr/sbin/entry.sh
+COPY inputrc /etc/inputrc
+COPY entry.sh /usr/sbin/entry.sh
 
 ENTRYPOINT ["/usr/sbin/entry.sh"]

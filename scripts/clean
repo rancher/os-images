@@ -1,5 +1,6 @@
 #!/bin/bash
+set -e
 
 cd $(dirname $0)/..
 
-rm -rf build dist gopath .dockerfile Dockerfile
+rm -rf src/docker/00-base/build src/docker/05-docker/build
