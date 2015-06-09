@@ -1,11 +1,12 @@
-FROM ubuntu:14.04.2
+FROM debian:jessie
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
-    apt-get install -y --no-install-recommends openssh-server rsync vim
+    apt-get install -y --no-install-recommends openssh-server rsync locales sudo vim less
 RUN rm -rf /etc/ssh/*key*
-COPY scripts/dockerimages/scripts/entry.sh /usr/sbin/
-COPY scripts/dockerimages/scripts/console.sh /usr/sbin/
-COPY scripts/dockerimages/scripts/update-ssh-keys /usr/bin/
+COPY build/entry.sh /usr/sbin/
+COPY build/console.sh /usr/sbin/
+COPY build/update-ssh-keys /usr/bin/
+COPY build/rancheros-install /usr/sbin/
 RUN echo 'RancherOS \\n \l' > /etc/issue
 RUN locale-gen en_US.UTF-8
 RUN addgroup --gid 1100 rancher && \

@@ -2,5 +2,4 @@
 /build
 /dist
 .dockerfile
-/src/docker/00-base/build
-/src/docker/05-docker/build
+/src/docker/*/build

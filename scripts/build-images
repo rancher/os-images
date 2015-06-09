@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+cd $(dirname $0)/..
+
+source scripts/version
 VERSION=${VERSION:?"VERSION not set"}
 
 BASE_CONTAINER=$(docker create rancher/dind:v0.1.0)
@@ -11,8 +14,6 @@ function cleanup {
 }
 trap cleanup EXIT
 
-cd $(dirname $0)/..
-
 source scripts/build-common
 
 BUILD=./src/docker/00-base/build
@@ -21,10 +22,13 @@ mkdir -p ${BUILD}
 echo Extracting ${ARTIFACTS}/os-base.tar.xz
 tar xJf ${ARTIFACTS}/os-base.tar.xz -C ${BUILD}
 
-docker cp ${BASE_CONTAINER}:/etc/ssl/certs/ca-certificates.crt src/docker/05-docker/build
+docker cp ${BASE_CONTAINER}:/etc/ssl/certs/ca-certificates.crt src/docker/01-docker/build
 
 for i in src/docker/[0-9]*; do
     tag="rancher/os-$(echo $i | cut -f2 -d-)"
+    if [ -x ${i}/.prebuild.sh ]; then
+        ${i}/.prebuild.sh;
+    fi
     echo Building $tag
     docker build -t ${tag} $i
     docker tag -f ${tag} ${tag}:${VERSION}
