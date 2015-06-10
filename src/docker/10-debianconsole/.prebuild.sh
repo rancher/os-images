@@ -1,10 +1,11 @@
 #!/bin/bash
+set -e
 
-BASE=$(dirname $0)
+cd $(dirname $0)
 
-rm -rf ${BASE}/build
-mkdir -p ${BASE}/build
-cp src/docker/01-base/entry.sh ${BASE}/build/
-cp src/docker/02-console/console.sh ${BASE}/build/
-cp src/docker/02-console/update-ssh-keys ${BASE}/build/
-cp src/docker/02-console/rancheros-install ${BASE}/build/
+rm -rf ./build
+mkdir -p ./build
+cp ./../01-base/entry.sh ./build/
+cp ./../02-console/console.sh ./build/
+cp ./../02-console/update-ssh-keys ./build/
+cp ./../02-console/rancheros-install ./build/

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-: ${ARTIFACTS:=$(pwd)/assets}
+ARTIFACTS=${ARTIFACTS:?"ARTIFACTS not set"}
 
 check()
 {
