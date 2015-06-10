@@ -3,4 +3,4 @@ set -e
 
 cd $(dirname $0)/..
 
-rm -rf src/docker/00-base/build src/docker/01-docker/build
+rm -rf src/docker/00-rootfs/build src/docker/02-docker/build

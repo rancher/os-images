@@ -1,5 +1,4 @@
-FROM scratch
-ADD build/dist/rootfs.tar /
+FROM rancher/os-rootfs
 RUN ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 # Cleanup Buildroot
 RUN rm /sbin/poweroff /sbin/reboot /sbin/halt && \

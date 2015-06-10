@@ -16,13 +16,13 @@ trap cleanup EXIT
 
 source scripts/build-common
 
-BUILD=./src/docker/00-base/build
+BUILD=./src/docker/00-rootfs/build
 mkdir -p ${BUILD}
 
 echo Extracting ${ARTIFACTS}/os-base.tar.xz
 tar xJf ${ARTIFACTS}/os-base.tar.xz -C ${BUILD}
 
-docker cp ${BASE_CONTAINER}:/etc/ssl/certs/ca-certificates.crt src/docker/01-docker/build
+docker cp ${BASE_CONTAINER}:/etc/ssl/certs/ca-certificates.crt src/docker/02-docker/build
 
 for i in src/docker/[0-9]*; do
     tag="rancher/os-$(echo $i | cut -f2 -d-)"
