@@ -3,6 +3,8 @@ set -e
 
 BASEDIR=$(cd $(dirname $0)/..; pwd)
 
+DO_PUSH="$1"
+
 cd $(dirname $0)
 
 source ./version
@@ -11,11 +13,18 @@ VERSION=${VERSION:?"VERSION not set"}
 cd ${BASEDIR}
 
 for i in src/docker/[0-9]*; do
-    tag="rancher/os-$(echo $i | cut -f2 -d-)"
-    echo Building $tag
+    tag="rancher/os-$(echo ${i} | cut -f2 -d-)"
+    echo Building ${tag}
     if [ -x ${i}/.prebuild.sh ]; then
         ${i}/.prebuild.sh;
     fi
-    docker build -t ${tag} $i
+    docker build -t ${tag} ${i}
     docker tag -f ${tag} ${tag}:${VERSION}
 done
+
+if [ "${DO_PUSH}" == "--push" ]; then
+    for i in src/docker/[0-9]*; do
+        tag="rancher/os-$(echo ${i} | cut -f2 -d-)"
+            docker push ${tag}:${VERSION}
+    done
+fi
