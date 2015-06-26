@@ -25,6 +25,6 @@ done
 if [ "${DO_PUSH}" == "--push" ]; then
     for i in src/docker/[0-9]*; do
         tag="rancher/os-$(echo ${i} | cut -f2 -d-)"
-            docker push ${tag}:${VERSION}
+        docker push ${tag}:${VERSION} || :
     done
 fi
