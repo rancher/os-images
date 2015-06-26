@@ -4,7 +4,7 @@ set -e
 BASE=$(dirname $0)
 
 
-DIND_CONTAINER=$(docker create rancher/dind:v0.1.0)
+DIND_CONTAINER=$(docker run -d rancher/dind:v0.1.0)
 
 function cleanup {
     docker rm -v ${DIND_CONTAINER}
