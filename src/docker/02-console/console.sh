@@ -6,8 +6,8 @@ setup_ssh()
     for i in rsa dsa ecdsa ed25519; do
         local output=/etc/ssh/ssh_host_${i}_key
         if [ ! -e $output ]; then
-            local saved="$(ros config get ssh.keys.${i})"
-            local pub="$(ros config get ssh.keys.${i}-pub)"
+            local saved="$(ros config get rancher.ssh.keys.${i})"
+            local pub="$(ros config get rancher.ssh.keys.${i}-pub)"
 
             if [[ -n "$saved" && -n "$pub" ]]; then
                 (
@@ -17,8 +17,8 @@ setup_ssh()
                 )
             else
                 ssh-keygen -f $output -N '' -t $i
-                ros config set -- ssh.keys.${i} "$(<${output})"
-                ros config set -- ssh.keys.${i}-pub "$(<${output}.pub)"
+                ros config set -- rancher.ssh.keys.${i} "$(<${output})"
+                ros config set -- rancher.ssh.keys.${i}-pub "$(<${output}.pub)"
             fi
         fi
     done

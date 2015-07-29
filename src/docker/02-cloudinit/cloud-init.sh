@@ -12,6 +12,6 @@ else
     mount -t 9p -o trans=virtio,version=9p2000.L config-2 ${MOUNT_POINT} 2>/dev/null || true
 fi
 
-ros config get cloud_init
+ros config get rancher.cloud_init
 
 cloud-init -save -network=${CLOUD_INIT_NETWORK:-true}

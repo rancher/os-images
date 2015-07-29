@@ -29,7 +29,7 @@ if [ "$(whoami)" != "root" ]; then
 fi
 
 if [ -x /usr/bin/ros ]; then
-    INSTALL_CONTAINER_IMAGE="$(ros config get upgrade.image)"
+    INSTALL_CONTAINER_IMAGE="$(ros config get rancher.upgrade.image)"
 fi
 
 if [ -n "$(grep RancherOS /etc/lsb-release)" ]; then
