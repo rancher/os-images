@@ -7,4 +7,3 @@ mkdir -p ./build/initrd
 
 tar xf ./../00-rootfs/build/dist/rootfs-static.tar -C ./build/initrd --strip-components=2 ./bin/busybox
 tar xf ./../00-rootfs/build/dist/rootfs-static.tar -C ./build/initrd --strip-components=3 ./usr/sbin/xtables-multi
-cp ./../02-docker/build/ca-certificates.crt ./build/initrd/ca.crt

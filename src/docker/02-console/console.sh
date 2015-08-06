@@ -76,6 +76,7 @@ cat > /etc/respawn.conf << EOF
 /sbin/getty 115200 tty5
 /sbin/getty 115200 tty6
 /usr/sbin/sshd -D
+/usr/sbin/docker.sh
 EOF
 
 if ! grep -q '^UseDNS no' /etc/ssh/sshd_config; then
