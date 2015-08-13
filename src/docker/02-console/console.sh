@@ -112,4 +112,9 @@ if [ -x /opt/rancher/bin/start.sh ]; then
     /opt/rancher/bin/start.sh || true
 fi
 
+if [ -x /etc/rc.local ]; then
+    echo Executing rc.local
+    /etc/rc.local || true
+fi
+
 exec respawn -f /etc/respawn.conf
