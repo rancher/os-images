@@ -27,12 +27,14 @@ for dev in ${DEVS[@]}; do
         mkfs.ext4 -L RANCHER_STATE ${dev}
     
         if [ -e "/userdata.tar" ]; then
-            mount -t ext4 ${dev} /var/
-            mkdir -p /var/lib/rancher/conf/cloud-config.d
+            mkdir -p /mnt/new-root
+            mount -t ext4 ${dev} /mnt/new-root
+            pushd /mnt/new-root
+            mkdir -p ./var/lib/rancher/conf/cloud-config.d
             echo $(tar -xvf /userdata.tar)
-            AUTHORIZED_KEY1=$(cat /.ssh/authorized_keys)
-            AUTHORIZED_KEY2=$(cat /.ssh/authorized_keys2)
-            tee /var/lib/rancher/conf/cloud-config.d/machine.yml << EOF
+            AUTHORIZED_KEY1=$(cat ./.ssh/authorized_keys)
+            AUTHORIZED_KEY2=$(cat ./.ssh/authorized_keys2)
+            tee ./var/lib/rancher/conf/cloud-config.d/machine.yml << EOF
 #cloud-config
 
 rancher:
@@ -55,6 +57,8 @@ users:
    - ${AUTHORIZED_KEY1}
    - ${AUTHORIZED_KEY2}
 EOF
+            popd
+            umount /mnt/new-root
         fi
 
         # do not check another device
