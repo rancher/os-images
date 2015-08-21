@@ -18,4 +18,6 @@ if [ -e /var/lib/rancher/conf/docker ]; then
     source /var/lib/rancher/conf/docker
 fi
 
+ulimit -n 1000000
+
 exec /usr/bin/dockerlaunch /usr/bin/docker $ARGS $DOCKER_OPTS >/var/log/docker.log 2>&1
