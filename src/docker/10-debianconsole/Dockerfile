@@ -1,7 +1,7 @@
 FROM debian:jessie
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
-    apt-get install -y --no-install-recommends openssh-server rsync locales sudo vim less curl
+    apt-get install -y --no-install-recommends iptables openssh-server rsync locales sudo vim less curl
 RUN rm -rf /etc/ssh/*key*
 COPY build/entry.sh /usr/sbin/
 COPY build/console.sh /usr/sbin/
