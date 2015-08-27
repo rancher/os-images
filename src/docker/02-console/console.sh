@@ -78,7 +78,6 @@ cat > /etc/respawn.conf << EOF
 /sbin/getty 115200 tty5
 /sbin/getty 115200 tty6
 /usr/sbin/sshd -D
-/usr/sbin/docker.sh
 EOF
 
 if ! grep -q '^UseDNS no' /etc/ssh/sshd_config; then
@@ -122,6 +121,8 @@ if [ -x /opt/rancher/bin/start.sh ]; then
     echo Executing custom script
     /opt/rancher/bin/start.sh || true
 fi
+
+touch /run/console-done
 
 if [ -x /etc/rc.local ]; then
     echo Executing rc.local
