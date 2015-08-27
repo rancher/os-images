@@ -5,7 +5,7 @@ RUN apt-get update && \
 RUN rm -rf /etc/ssh/*key*
 COPY build/entry.sh /usr/sbin/
 COPY build/console.sh /usr/sbin/
-COPY build/docker.sh /usr/sbin/
+COPY build/docker-init /usr/sbin/
 COPY build/update-ssh-keys /usr/bin/
 COPY build/rancheros-install /usr/sbin/
 RUN echo 'RancherOS \\n \l' > /etc/issue
