@@ -1,6 +1,6 @@
 FROM rancher/os-base
 COPY console.sh /usr/sbin/
-COPY docker-init /usr/sbin/
+COPY docker.sh /usr/sbin/
 COPY update-ssh-keys /usr/bin/
 COPY rancheros-install /usr/sbin/
 RUN sed -i 's/rancher:!/rancher:*/g' /etc/shadow && \
