@@ -1,7 +1,7 @@
 FROM ubuntu:14.04.2
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
-    apt-get install -y --no-install-recommends iptables openssh-server rsync vim curl
+    apt-get install -y --no-install-recommends iptables openssh-server rsync vim curl ca-certificates
 RUN rm -rf /etc/ssh/*key*
 COPY build/entry.sh /usr/sbin/
 COPY build/console.sh /usr/sbin/
