@@ -8,4 +8,9 @@ while [ ! -e /run/console-done ]; do
     sleep 1
 done
 
-exec /usr/bin/dockerlaunch /usr/bin/docker "$@" $DOCKER_OPTS >/var/log/docker.log 2>&1
+DOCKER_BIN=$(which docker) || DOCKER_BIN=/usr/bin/docker
+if [ "$DOCKER_BIN" == "/usr/bin/docker" ] && [ -e /usr/local/bin/docker ]; then
+    DOCKER_BIN=/usr/local/bin/docker
+fi
+
+exec /usr/bin/dockerlaunch $DOCKER_BIN "$@" $DOCKER_OPTS >/var/log/docker.log 2>&1
