@@ -8,7 +8,7 @@ DO_PUSH="$1"
 cd $(dirname $0)
 
 source ./version
-VERSION=${VERSION:?"VERSION not set"}
+export VERSION=${VERSION:?"VERSION not set"}
 
 cd ${BASEDIR}
 

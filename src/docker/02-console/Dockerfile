@@ -1,8 +1,6 @@
 FROM rancher/os-base
-COPY console.sh /usr/sbin/
-COPY docker-init /usr/sbin/
-COPY update-ssh-keys /usr/bin/
-COPY rancheros-install /usr/sbin/
+COPY console.sh docker-init update-ssh-keys rancheros-install /usr/sbin/
+COPY build/lsb-release /etc/
 RUN sed -i 's/rancher:!/rancher:*/g' /etc/shadow && \
     sed -i 's/docker:!/docker:*/g' /etc/shadow && \
     sed -i 's/#ClientAliveInterval 0/ClientAliveInterval 180/g' /etc/ssh/sshd_config && \
