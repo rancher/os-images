@@ -63,13 +63,6 @@ fi
 
 setup_ssh
 
-VERSION="$(ros -v | awk '{print $NF}')"
-cat > /etc/lsb-release << EOF
-DISTRIB_ID=RancherOS
-DISTRIB_RELEASE=${VERSION}
-DISTRIB_DESCRIPTION="RancherOS ${VERSION}"
-EOF
-
 cat > /etc/respawn.conf << EOF
 /sbin/getty 115200 tty1
 /sbin/getty 115200 tty2
@@ -92,6 +85,7 @@ if ! grep -q '^AllowGroups docker' /etc/ssh/sshd_config; then
     echo "AllowGroups docker" >> /etc/ssh/sshd_config
 fi
 
+VERSION="$(ros os version)"
 ID_TYPE="busybox"
 if [ -e /etc/os-release ] && grep -q 'ID_LIKE=' /etc/os-release; then
     ID_TYPE=$(grep 'ID_LIKE=' /etc/os-release | cut -d'=' -f2)
