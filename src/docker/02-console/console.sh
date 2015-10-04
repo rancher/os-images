@@ -26,6 +26,16 @@ setup_ssh()
     mkdir -p /var/run/sshd
 }
 
+setup_cgroup()
+{
+    local cgroup=$(grep name=systemd /proc/$$/cgroup | cut -f3 -d:)
+    if [ -n "$cgroup" ]; then
+        mkdir -p /sys/fs/cgroup/systemd${cgroup}
+    fi
+}
+
+setup_cgroup || true
+
 RANCHER_HOME=/home/rancher
 if [ ! -d ${RANCHER_HOME} ]; then
     mkdir -p ${RANCHER_HOME}
