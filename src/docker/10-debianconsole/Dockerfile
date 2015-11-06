@@ -12,6 +12,7 @@ RUN addgroup --gid 1100 rancher && \
     echo ClientAliveInterval 180 >> /etc/ssh/sshd_config && \
     echo '## allow password less for rancher user' >> /etc/sudoers && \
     echo 'rancher ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers && \
+    echo '## allow password less for docker user' >> /etc/sudoers && \
     echo 'docker ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 ENTRYPOINT ["/usr/sbin/entry.sh"]
 CMD ["/usr/sbin/console.sh"]
