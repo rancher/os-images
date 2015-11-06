@@ -1,7 +1,7 @@
 FROM ubuntu:14.04.3
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
-    apt-get install -y --no-install-recommends iptables openssh-server rsync vim curl ca-certificates
+    apt-get install -y --no-install-recommends iptables openssh-server rsync vim curl ca-certificates psmisc htop
 RUN rm -rf /etc/ssh/*key*
 COPY build/entry.sh build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
 RUN echo 'RancherOS \\n \l' > /etc/issue
