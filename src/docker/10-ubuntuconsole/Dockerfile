@@ -4,7 +4,6 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends iptables openssh-server rsync vim curl ca-certificates
 RUN rm -rf /etc/ssh/*key*
 COPY build/entry.sh build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
-RUN echo 'RancherOS \\n \l' > /etc/issue
 RUN locale-gen en_US.UTF-8
 RUN addgroup --gid 1100 rancher && \
     addgroup --gid 1101 docker && \
