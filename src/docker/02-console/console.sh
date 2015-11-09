@@ -64,13 +64,6 @@ if [ -n "$PASSWORD" ]; then
     echo "rancher:$PASSWORD" | chpasswd
 fi
 
-cloud-init -execute
-
-if [ -x /var/lib/rancher/conf/cloud-config-script ]; then
-    echo "Running /var/lib/rancher/conf/cloud-config-script"
-    /var/lib/rancher/conf/cloud-config-script || true
-fi
-
 setup_ssh
 
 cat > /etc/respawn.conf << EOF
@@ -120,6 +113,13 @@ fi
 
 echo 'RancherOS \n \l' > /etc/issue
 echo $(/sbin/ifconfig | grep -B1 "inet addr" |awk '{ if ( $1 == "inet" ) { print $2 } else if ( $2 == "Link" ) { printf "%s:" ,$1 } }' |awk -F: '{ print $1 ": " $3}') >> /etc/issue
+
+cloud-init -execute
+
+if [ -x /var/lib/rancher/conf/cloud-config-script ]; then
+    echo "Running /var/lib/rancher/conf/cloud-config-script"
+    /var/lib/rancher/conf/cloud-config-script || true
+fi
 
 if [ -x /opt/rancher/bin/start.sh ]; then
     echo Executing custom script
