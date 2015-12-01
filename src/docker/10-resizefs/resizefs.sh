@@ -10,17 +10,22 @@ if [ "$DEV" == "" ]; then
 fi
 
 if [ -e $STAMP ]; then
-    echo Headers already installed in $DIR
+    echo FS already expanded.
     exit 0
 fi
 
 if ls ${DEV} >/dev/null 2>&1; then
+  START=$(fdisk ${DEV} <<EOF | grep -e "^${DEV}1" | awk '{print $2}'
+p
+q
+EOF
+  )
   fdisk ${DEV} <<EOF
 d
 n
 p
 1
-16065
+${START}
 
 a
 w
