@@ -1,26 +1,21 @@
 #!/bin/bash
-set -x
+set -ex
 
-DEV=${1}
+RESIZE_DEV=${RESIZE_DEV:?"RESIZE_DEV not set."}
 STAMP=/var/log/resizefs.done
 
-if [ "$DEV" == "" ]; then
-  echo "resizefs.sh: expecting device as the 1st arg"
-  exit 1
-fi
-
-if [ -e $STAMP ]; then
-    echo FS already expanded.
+if [ -e "${STAMP}" ]; then
+    echo FS already resized.
     exit 0
 fi
 
-if ls ${DEV} >/dev/null 2>&1; then
-  START=$(fdisk ${DEV} <<EOF | grep -e "^${DEV}1" | awk '{print $2}'
+if [ -b "${RESIZE_DEV}" ]; then
+  START=$(fdisk ${RESIZE_DEV} <<EOF | grep -e "^${RESIZE_DEV}1" | awk '{print $2}'
 p
 q
 EOF
   )
-  fdisk ${DEV} <<EOF
+  fdisk ${RESIZE_DEV} <<EOF
 d
 n
 p
@@ -31,7 +26,10 @@ a
 w
 EOF
   partprobe
+  resize2fs ${RESIZE_DEV}1 || :
+else
+  echo "Block device expected: ${RESIZE_DEV} is not."
+  exit 1
 fi
 
-resize2fs ${DEV}1
 touch $STAMP
