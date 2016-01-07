@@ -1,2 +1,2 @@
 FROM scratch
-ADD build/dist/rootfs.tar /
+ADD build/rootfs.tar /
