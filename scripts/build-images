@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+export ARCH=${ARCH:-"amd64"}
+[ "$ARCH" == "amd64" ] || . ./.${ARCH}.docker-env
+
 BASEDIR=$(cd $(dirname $0)/..; pwd)
 
 DO_PUSH="$1"
@@ -12,19 +15,22 @@ export VERSION=${VERSION:?"VERSION not set"}
 
 cd ${BASEDIR}
 
-for i in src/docker/[0-9]*; do
-    tag="rancher/os-$(echo ${i} | cut -f2 -d-)"
-    echo Building ${tag}:${VERSION}
-    if [ -x ${i}/.prebuild.sh ]; then
-        ${i}/.prebuild.sh;
-    fi
-    docker build -t ${tag} ${i}
-    docker tag -f ${tag} ${tag}:${VERSION}
-done
+suffix=""
+[ "$ARCH" == "amd64" ] || suffix="_${ARCH}"
 
 if [ "${DO_PUSH}" == "--push" ]; then
     for i in src/docker/[0-9]*; do
         tag="rancher/os-$(echo ${i} | cut -f2 -d-)"
-        docker push ${tag}:${VERSION} || :
+        docker push ${tag}:${VERSION}${suffix} || :
+    done
+else
+    for i in src/docker/[0-9]*; do
+        tag="rancher/os-$(echo ${i} | cut -f2 -d-)"
+        echo Building ${tag}:${VERSION}
+        if [ -x ${i}/.prebuild.sh ]; then
+            ${i}/.prebuild.sh;
+        fi
+        docker build -t ${tag} ${i}
+        docker tag -f ${tag} ${tag}:${VERSION}${suffix}
     done
 fi
