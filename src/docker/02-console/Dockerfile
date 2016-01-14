@@ -9,4 +9,5 @@ RUN sed -i 's/rancher:!/rancher:*/g' /etc/shadow && \
     echo '## allow password less for docker user' >> /etc/sudoers && \
     echo 'docker ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers && \
     ln -sf /usr/bin/docker.dist /usr/bin/docker
+COPY prompt.sh /etc/profile.d/
 CMD ["/usr/sbin/console.sh"]
