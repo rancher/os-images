@@ -15,7 +15,7 @@ p
 q
 EOF
   )
-  fdisk ${RESIZE_DEV} <<EOF
+  (fdisk ${RESIZE_DEV} <<EOF
 d
 n
 p
@@ -25,6 +25,9 @@ ${START}
 a
 w
 EOF
+  ) && fdisk_exit=0 || fdisk_exit=$?
+  [ "$fdisk_exit" -eq 0 ] || [[ "$FORCE" ]]
+  
   partprobe
   resize2fs ${RESIZE_DEV}1 || :
 else
