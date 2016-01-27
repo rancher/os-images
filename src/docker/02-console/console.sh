@@ -84,6 +84,10 @@ if ! grep -q '^PermitRootLogin no' /etc/ssh/sshd_config; then
     echo "PermitRootLogin no" >> /etc/ssh/sshd_config
 fi
 
+if ! grep -q '^ServerKeyBits 2048' /etc/ssh/sshd_config; then
+    echo "ServerKeyBits 2048" >> /etc/ssh/sshd_config
+fi
+
 if ! grep -q '^AllowGroups docker' /etc/ssh/sshd_config; then
     echo "AllowGroups docker" >> /etc/ssh/sshd_config
 fi
