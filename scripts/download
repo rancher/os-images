@@ -5,3 +5,4 @@ cd $(dirname $0)
 source ./build-common
 
 download 098a64ddb42381fc62ba515870aa8dc6ce19002f https://github.com/rancher/os-base/releases/download/v2015.11.1-1/os-base_amd64.tar.xz
+download 1da38279861aee631a5d41a7ac9835e4f996d843 https://github.com/rancher/os-base/releases/download/v2015.11.1-1/os-base_arm.tar.xz

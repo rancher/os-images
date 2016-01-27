@@ -4,3 +4,4 @@
 .dockerfile
 /src/docker/*/assets
 /src/docker/*/build
+.*.docker-env
