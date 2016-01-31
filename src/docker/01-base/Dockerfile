@@ -14,6 +14,7 @@ RUN rm /sbin/poweroff /sbin/reboot /sbin/halt && \
        /var/spool \
        /var/lib/misc && \
     mkdir -p \
+       /home \
        /run \
        /var/cache \
        /var/lock \
