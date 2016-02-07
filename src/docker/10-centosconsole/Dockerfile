@@ -1,4 +1,4 @@
-FROM centos:7
+FROM rancher/os-centosconsole-base
 RUN yum upgrade -y && \
     yum install -y iptables openssh-server rsync sudo vim less ca-certificates psmisc htop
 RUN rm -rf /etc/ssh/*key*

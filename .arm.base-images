@@ -1,0 +1,4 @@
+DEBIAN_BASE_IMAGE="resin/rpi-raspbian:jessie"
+UBUNTU_BASE_IMAGE="armhf/ubuntu:14.04"
+FEDORA_BASE_IMAGE="armv7/armhf-fedora:23"
+CENTOS_BASE_IMAGE="armhfbuild/centos:7"
