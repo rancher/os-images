@@ -1,0 +1,12 @@
+FROM docker:1.9.1
+RUN apk add --no-cache bash
+
+ENV DAPPER_DOCKER_SOCKET true
+ENV DAPPER_SOURCE /source
+ENV DAPPER_OUTPUT ""
+ENV DAPPER_RUN_ARGS --privileged
+ENV SHELL /bin/bash
+
+WORKDIR ${DAPPER_SOURCE}
+
+CMD /scripts/build-images
