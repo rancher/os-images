@@ -67,14 +67,20 @@ fi
 setup_ssh
 
 cat > /etc/respawn.conf << EOF
-/sbin/getty 115200 tty1
-/sbin/getty 115200 tty2
-/sbin/getty 115200 tty3
-/sbin/getty 115200 tty4
-/sbin/getty 115200 tty5
 /sbin/getty 115200 tty6
+/sbin/getty 115200 tty5
+/sbin/getty 115200 tty4
+/sbin/getty 115200 tty3
+/sbin/getty 115200 tty2
+/sbin/getty 115200 tty1
 /usr/sbin/sshd -D
 EOF
+
+for i in ttyS{0..4}; do
+    if grep -q 'console='$i /proc/cmdline; then
+        echo '/sbin/getty 115200' $i >> /etc/respawn.conf
+    fi
+done
 
 if ! grep -q '^UseDNS no' /etc/ssh/sshd_config; then
     echo "UseDNS no" >> /etc/ssh/sshd_config
