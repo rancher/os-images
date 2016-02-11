@@ -9,7 +9,8 @@ should_load() {
     if [[ ${file} =~ \.done$ ]]; then echo false
     elif [ -f ${file} ]; then
         if [ ! -e ${file}.done ]; then echo true
-        elif [[ $(stat -c %Y ${file}) > $(stat -c %Y ${file}.done) ]]; then echo true
+        # Removing updated behavior until `stat` returns
+        #elif [[ $(stat -c %Y ${file}) > $(stat -c %Y ${file}.done) ]]; then echo true
         else echo false
         fi
     else echo false
