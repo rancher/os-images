@@ -128,10 +128,6 @@ fi
 
 touch /run/console-done
 
-for ((i=0;i<10;i++)); do
-    docker version >/dev/null 2>&1 && break || sleep 1
-done
-
 if [ -x /etc/rc.local ]; then
     echo Executing rc.local
     /etc/rc.local || true
