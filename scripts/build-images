@@ -2,36 +2,33 @@
 set -e
 
 export ARCH=${ARCH:-"amd64"}
-[ "$ARCH" == "amd64" ] || . ./.${ARCH}.docker-env
 
-BASEDIR=$(cd $(dirname $0)/..; pwd)
+cd $(dirname $0)/..
 
 DO_PUSH="$1"
 
-cd $(dirname $0)
+set -a
+. build.conf
+[ "${ARCH}" == "amd64" ] || . ./.${ARCH}.docker-env
+set +a
 
-source ./version
-export VERSION=${VERSION:?"VERSION not set"}
-
-cd ${BASEDIR}
-
-suffix=""
-[ "$ARCH" == "amd64" ] || suffix="_${ARCH}"
+SUFFIX=""
+[ "${ARCH}" == "amd64" ] || SUFFIX="_${ARCH}"
 
 if [ "${DO_PUSH}" == "--push" ]; then
     for i in src/docker/[0-9]*; do
-        tag="rancher/os-$(echo ${i} | cut -f2 -d-)"
-        echo Pushing ${tag}:${VERSION}${suffix}
-        docker push ${tag}:${VERSION}${suffix} || :
+        tag="${OS_IMAGES_ROOT}/os-$(echo ${i} | cut -f2 -d-)"
+        echo Pushing ${tag}:${VERSION}${SUFFIX}
+        docker push ${tag}:${VERSION}${SUFFIX} || :
     done
 else
     for i in src/docker/[0-9]*; do
-        tag="rancher/os-$(echo ${i} | cut -f2 -d-)"
-        echo Building ${tag}:${VERSION}${suffix}
+        tag="${OS_IMAGES_ROOT}/os-$(echo ${i} | cut -f2 -d-)"
+        echo Building ${tag}:${VERSION}${SUFFIX}
         if [ -x ${i}/.prebuild.sh ]; then
             ${i}/.prebuild.sh;
         fi
         docker build -t ${tag} ${i}
-        docker tag -f ${tag} ${tag}:${VERSION}${suffix}
+        docker tag -f ${tag} ${tag}:${VERSION}${SUFFIX}
     done
 fi
