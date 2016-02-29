@@ -3,6 +3,7 @@ RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
     apt-get install -y --no-install-recommends iptables openssh-server rsync vim curl ca-certificates psmisc htop
 RUN rm -rf /etc/ssh/*key*
+RUN rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt
 COPY build/entry.sh build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
 RUN locale-gen en_US.UTF-8
 RUN addgroup --gid 1100 rancher && \
