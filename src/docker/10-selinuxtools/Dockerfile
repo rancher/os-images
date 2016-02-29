@@ -10,6 +10,7 @@ RUN cd /usr/src/refpolicy && git submodule init && git submodule update && \
     make conf && make && make install-headers
 
 RUN rm -rf /etc/ssh/*key*
+RUN rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt
 COPY build/entry.sh build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
 RUN localedef -c -f UTF-8 -i en_US en_US.UTF-8
 RUN groupadd --gid 1100 rancher && \
