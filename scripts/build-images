@@ -17,18 +17,20 @@ SUFFIX=""
 
 if [ "${DO_PUSH}" == "--push" ]; then
     for i in src/docker/[0-9]*; do
-        tag="${OS_IMAGES_ROOT}/os-$(echo ${i} | cut -f2 -d-)"
-        echo Pushing ${tag}:${VERSION}${SUFFIX}
-        docker push ${tag}:${VERSION}${SUFFIX} || :
+        name="os-$(echo ${i} | cut -f2 -d-)"
+        tag="${OS_IMAGES_ROOT}/${name}:${VERSION}${SUFFIX}"
+        echo Pushing ${tag}
+        docker push ${tag} || :
     done
 else
     for i in src/docker/[0-9]*; do
-        tag="${OS_IMAGES_ROOT}/os-$(echo ${i} | cut -f2 -d-)"
-        echo Building ${tag}:${VERSION}${SUFFIX}
+        name="os-$(echo ${i} | cut -f2 -d-)"
+        tag="${OS_IMAGES_ROOT}/${name}:${VERSION}${SUFFIX}"
+        echo Building ${tag}
         if [ -x ${i}/.prebuild.sh ]; then
             ${i}/.prebuild.sh;
         fi
-        docker build -t ${tag} ${i}
-        docker tag -f ${tag} ${tag}:${VERSION}${SUFFIX}
+        docker build -t rancher/${name} ${i}
+        docker tag -f rancher/${name} ${tag}
     done
 fi
