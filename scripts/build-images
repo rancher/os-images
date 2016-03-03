@@ -30,7 +30,11 @@ else
         if [ -x ${i}/.prebuild.sh ]; then
             ${i}/.prebuild.sh;
         fi
-        docker build -t rancher/${name} ${i}
+        if [ -f ${i}/Dockerfile.${ARCH} ]; then
+            docker build -t rancher/${name} -f ${i}/Dockerfile.${ARCH} ${i}
+        else
+            docker build -t rancher/${name} ${i}
+        fi
         docker tag -f rancher/${name} ${tag}
     done
 fi
