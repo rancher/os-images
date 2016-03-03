@@ -35,6 +35,6 @@ else
         else
             docker build -t rancher/${name} ${i}
         fi
-        docker tag -f rancher/${name} ${tag}
+        docker tag rancher/${name} ${tag}
     done
 fi
