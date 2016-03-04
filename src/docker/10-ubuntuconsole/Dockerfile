@@ -1,4 +1,4 @@
-FROM ubuntu:14.04.3
+FROM rancher/os-ubuntuconsole-base
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
     apt-get install -y --no-install-recommends iptables openssh-server rsync vim curl ca-certificates psmisc htop

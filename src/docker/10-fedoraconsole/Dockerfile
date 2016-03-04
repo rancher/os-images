@@ -1,4 +1,4 @@
-FROM fedora:23
+FROM rancher/os-fedoraconsole-base
 RUN dnf upgrade -y && \
     dnf install -y iptables openssh-server rsync sudo vim less ca-certificates psmisc htop
 RUN rm -rf /etc/ssh/*key*
