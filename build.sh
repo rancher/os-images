@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-EXTRA_ARCHS='arm'
+EXTRA_ARCHS='arm arm64'
 
 cd $(dirname $0)
 
@@ -9,10 +9,10 @@ cd $(dirname $0)
 
 for arch in ${EXTRA_ARCHS}; do
     echo ''
-    if [ -f ./.${arch}.docker-env ]; then
+    if [ -f ./.docker-env.${arch} ]; then
         ARCH=${arch} ./scripts/build-images || :
     else
-        echo "WARN: Can't build for 'ARCH=${arch}': ./.${arch}.docker-env doesn't exist"
+        echo "WARN: Can't build for 'ARCH=${arch}': ./.docker-env.${arch} doesn't exist"
     fi
     echo ''
 done

@@ -1,4 +1,4 @@
-FROM docker:1.9.1
+FROM docker:1.10.2
 RUN apk add --no-cache bash
 
 ENV DAPPER_DOCKER_SOCKET true

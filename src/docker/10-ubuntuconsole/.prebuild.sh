@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
+[ "$UBUNTU_BASE_IMAGE" == "" ] && exit 42 # skip image
 # FIXME Remove this when Docker supplies multi-arch base images
-. .$ARCH.base-images
 [[ -n "$(docker images -q $UBUNTU_BASE_IMAGE 2> /dev/null)" ]] || docker pull $UBUNTU_BASE_IMAGE
-docker tag -f $UBUNTU_BASE_IMAGE rancher/os-ubuntuconsole-base
+docker tag $UBUNTU_BASE_IMAGE rancher/os-ubuntuconsole-base
 
 cd $(dirname $0)
 
