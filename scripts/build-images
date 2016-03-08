@@ -9,7 +9,8 @@ DO_PUSH="$1"
 
 set -a
 . build.conf
-[ "${ARCH}" == "amd64" ] || . ./.${ARCH}.docker-env
+. build.conf.${ARCH}
+[ "${ARCH}" == "amd64" ] || . ./.docker-env.${ARCH}
 set +a
 
 SUFFIX=""
@@ -28,9 +29,17 @@ else
         tag="${OS_IMAGES_ROOT}/${name}:${VERSION}${SUFFIX}"
         echo Building ${tag}
         if [ -x ${i}/.prebuild.sh ]; then
-            ${i}/.prebuild.sh;
+            if ${i}/.prebuild.sh; then
+                docker build -t rancher/${name} ${i}
+                docker tag rancher/${name} ${tag}
+            elif [ "$?" != "42" ]; then
+                exit 1
+            else
+                echo "WARN: Skipping ${tag}"
+            fi
+        else
+            docker build -t rancher/${name} ${i}
+            docker tag rancher/${name} ${tag}
         fi
-        docker build -t rancher/${name} ${i}
-        docker tag -f rancher/${name} ${tag}
     done
 fi
