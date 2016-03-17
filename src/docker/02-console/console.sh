@@ -76,7 +76,7 @@ cat > /etc/respawn.conf << EOF
 /usr/sbin/sshd -D
 EOF
 
-for i in ttyS{0..4}; do
+for i in ttyS{0..4} tty0 ttyAMA0; do
     if grep -q 'console='$i /proc/cmdline; then
         echo '/sbin/getty 115200' $i >> /etc/respawn.conf
     fi
