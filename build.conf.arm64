@@ -2,6 +2,6 @@ OS_BASE_URL=https://github.com/rancher/os-base/releases/download/v2016.02/os-bas
 OS_BASE_SHA1=10a02f903c17f80ec97f392219b31a31c7e35a55
 
 DEBIAN_BASE_IMAGE="aarch64/debian:jessie"
-UBUNTU_BASE_IMAGE="aarch64/ubuntu:14.04"
+UBUNTU_BASE_IMAGE="aarch64/ubuntu:16.04"
 FEDORA_BASE_IMAGE=""
 CENTOS_BASE_IMAGE=""
