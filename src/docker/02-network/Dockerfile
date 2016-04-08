@@ -1,2 +1,3 @@
 FROM rancher/os-base
-CMD ["netconf"]
+COPY network.sh  /
+CMD ["/network.sh"]
