@@ -10,24 +10,7 @@ if [ -e "${STAMP}" ]; then
 fi
 
 if [ -b "${RESIZE_DEV}" ]; then
-  START=$(fdisk ${RESIZE_DEV} <<EOF | grep -e "^${RESIZE_DEV}1" | awk '{print $2}'
-p
-q
-EOF
-  )
-  (fdisk ${RESIZE_DEV} <<EOF
-d
-n
-p
-1
-${START}
-
-a
-w
-EOF
-  ) && fdisk_exit=0 || fdisk_exit=$?
-  [ "$fdisk_exit" -eq 0 ] || [[ "$FORCE" ]]
-  
+  growpart ${RESIZE_DEV} 1
   partprobe
   resize2fs ${RESIZE_DEV}1 || :
 else
