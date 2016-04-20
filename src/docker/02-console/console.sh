@@ -11,7 +11,7 @@ setup_ssh()
 
             if [[ -n "$saved" && -n "$pub" ]]; then
                 (
-                    umask 477
+                    umask 077
                     echo "$saved" > ${output}
                     echo "$pub" > ${output}.pub
                 )
