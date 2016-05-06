@@ -3,5 +3,5 @@ OS_BASE_SHA1=2a6a208c5d697154e1f034f2115b7f592ea67f0f
 
 DEBIAN_BASE_IMAGE="resin/rpi-raspbian:jessie"
 UBUNTU_BASE_IMAGE="armhf/ubuntu:14.04"
-FEDORA_BASE_IMAGE="armv7/armhf-fedora:23"
+FEDORA_BASE_IMAGE=""
 CENTOS_BASE_IMAGE="armhfbuild/centos:7"
