@@ -1,7 +1,0 @@
-#!/bin/bash
-set -e
-
-cd $(dirname $0)
-source ./build-common
-
-download ${OS_BASE_SHA1} ${OS_BASE_URL}
