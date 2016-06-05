@@ -50,7 +50,7 @@ RUN curl -fL ${!DOCKER_URL} > /usr/bin/docker && \
     chmod +x /usr/bin/docker
 
 # Install dapper
-RUN curl -sL https://releases.rancher.com/dapper/latest/dapper-`uname -s`-`uname -m` > /usr/bin/dapper && \
+RUN curl -sL https://releases.rancher.com/dapper/latest/dapper-`uname -s`-`uname -m | sed 's/arm.*/arm/'` > /usr/bin/dapper && \
     chmod +x /usr/bin/dapper
 
 ENTRYPOINT ["./scripts/entry"]
