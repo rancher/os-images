@@ -2,7 +2,7 @@ FROM rancher/os-debianconsole-base
 # FROM amd64=debian:jessie arm64=aarch64/debian:jessie arm=resin/rpi-raspbian:jessie
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
-    apt-get install -y --no-install-recommends iptables openssh-server rsync locales sudo vim less curl ca-certificates psmisc htop kmod
+    apt-get install -y --no-install-recommends iptables openssh-server rsync locales sudo vim less curl ca-certificates psmisc htop kmod iproute2
 RUN rm -rf /etc/ssh/*key*
 RUN rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt
 COPY build/entry.sh build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
