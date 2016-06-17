@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [ -e /var/lib/rancher/conf/docker ]; then
     source /var/lib/rancher/conf/docker
@@ -9,8 +10,20 @@ while [ ! -e /run/console-done ]; do
 done
 
 DOCKER_BIN=$(which docker) || DOCKER_BIN=/usr/bin/docker
-if [ "$DOCKER_BIN" == "/usr/bin/docker" ] && [ -e /usr/local/bin/docker ]; then
-    DOCKER_BIN=/usr/local/bin/docker
+
+for i in /opt/bin /usr/local/bin; do
+    if [ -x ${i}/docker ]; then
+        PATH=${i}:$PATH
+        DOCKER_BIN=${i}/docker
+        break
+    fi
+done
+
+mount --make-shared /
+mount --make-shared /run
+
+if [ "$(grep '/var/lib/docker /var/lib/docker ' /proc/self/mountinfo | awk '{print $9}')" = "rootfs" ]; then
+    export DOCKER_RAMDISK=1
 fi
 
-exec /usr/bin/dockerlaunch $DOCKER_BIN "$@" $DOCKER_OPTS >/var/log/docker.log 2>&1
+exec /usr/bin/dockerlaunch $DOCKER_BIN "$@" $DOCKER_OPTS >>/var/log/docker.log 2>&1
