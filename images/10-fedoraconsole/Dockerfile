@@ -1,5 +1,5 @@
 FROM rancher/os-fedoraconsole-base
-# FROM amd64=fedora:23 arm64=rancher/aarch64-fedora:23 arm=armv7/armhf-fedora:23
+# FROM amd64=fedora:23 arm64=rancher/aarch64-fedora:23 arm=skip
 RUN dnf upgrade -y && \
     dnf install -y iptables openssh-server rsync sudo vim less ca-certificates psmisc htop procps-ng
 RUN rm -rf /etc/ssh/*key*
