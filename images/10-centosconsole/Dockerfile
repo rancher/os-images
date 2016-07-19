@@ -1,5 +1,5 @@
 FROM rancher/os-centosconsole-base
-# FROM amd64=skip arm64=skip arm=armhfbuild/centos:7
+# FROM amd64=centos:7 arm64=skip arm=skip
 RUN yum upgrade -y && \
     yum install -y iptables openssh-server rsync sudo vim less ca-certificates psmisc htop procps-ng
 RUN rm -rf /etc/ssh/*key*
