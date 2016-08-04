@@ -30,16 +30,6 @@ setup_ssh()
     mkdir -p /var/run/sshd
 }
 
-setup_cgroup()
-{
-    local cgroup=$(grep name=systemd /proc/$$/cgroup | cut -f3 -d:)
-    if [ -n "$cgroup" ]; then
-        mkdir -p /sys/fs/cgroup/systemd${cgroup}
-    fi
-}
-
-setup_cgroup || true
-
 RANCHER_HOME=/home/rancher
 if [ ! -d ${RANCHER_HOME} ]; then
     mkdir -p ${RANCHER_HOME}
@@ -66,6 +56,7 @@ done
 
 if [ -n "$PASSWORD" ]; then
     echo "rancher:$PASSWORD" | chpasswd
+    sed -E -i 's/(rancher:.*:).*(:.*:.*:.*:.*:.*:.*)$/\1\2/' /etc/shadow
 fi
 
 setup_ssh
@@ -114,7 +105,7 @@ VERSION=$VERSION
 ID=rancheros
 ID_LIKE=$ID_TYPE
 VERSION_ID=$VERSION
-PRETTY_NAME="RancherOS"
+PRETTY_NAME="RancherOS $VERSION"
 HOME_URL=
 SUPPORT_URL=
 BUG_REPORT_URL=
@@ -136,7 +127,7 @@ if [ -x /opt/rancher/bin/start.sh ]; then
     /opt/rancher/bin/start.sh || true
 fi
 
-echo $(ros config get rancher.console) > /run/console-done
+echo `ros config get rancher.console` > /run/console-done
 
 if [ -x /etc/rc.local ]; then
     echo Executing rc.local
