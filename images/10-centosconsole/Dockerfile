@@ -16,10 +16,13 @@ RUN groupadd --gid 1100 rancher && \
     echo 'rancher ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers && \
     echo '## allow password less for docker user' >> /etc/sudoers && \
     echo 'docker ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers && \
-    ln -sf /usr/bin/docker.dist /usr/bin/docker && \
-    ln -sf /usr/bin/docker-containerd.dist /usr/bin/docker-containerd && \
-    ln -sf /usr/bin/docker-containerd-shim.dist /usr/bin/docker-containerd-shim && \
-    ln -sf /usr/bin/docker-runc.dist /usr/bin/docker-runc
+    ln -sf /var/lib/rancher/docker/docker /usr/bin/docker && \
+    ln -sf /var/lib/rancher/docker/docker-containerd /usr/bin/docker-containerd && \
+    ln -sf /var/lib/rancher/docker/docker-containerd-ctr /usr/bin/docker-containerd-ctr && \
+    ln -sf /var/lib/rancher/docker/docker-containerd-shim /usr/bin/docker-containerd-shim && \
+    ln -sf /var/lib/rancher/docker/dockerd /usr/bin/dockerd && \
+    ln -sf /var/lib/rancher/docker/docker-proxy /usr/bin/docker-proxy && \
+    ln -sf /var/lib/rancher/docker/docker-runc /usr/bin/docker-runc
 COPY prompt.sh /etc/profile.d/
 ENTRYPOINT ["/usr/sbin/entry.sh"]
 CMD ["/usr/sbin/console.sh"]
