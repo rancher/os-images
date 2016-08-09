@@ -5,7 +5,7 @@ RUN dnf upgrade -y && \
 RUN rm -rf /etc/ssh/*key*
 RUN rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt
 RUN ln -s /sbin/agetty /sbin/getty
-COPY build/entry.sh build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
+COPY build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
 RUN localedef -c -f UTF-8 -i en_US en_US.UTF-8
 RUN groupadd --gid 1100 rancher && \
     groupadd --gid 1101 docker && \
@@ -21,5 +21,5 @@ RUN groupadd --gid 1100 rancher && \
     ln -sf /usr/bin/docker-containerd-shim.dist /usr/bin/docker-containerd-shim && \
     ln -sf /usr/bin/docker-runc.dist /usr/bin/docker-runc
 COPY prompt.sh /etc/profile.d/
-ENTRYPOINT ["/usr/sbin/entry.sh"]
+ENTRYPOINT ["/usr/bin/ros", "entrypoint"]
 CMD ["/usr/sbin/console.sh"]

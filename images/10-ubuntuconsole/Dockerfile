@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends iptables openssh-server rsync locales sudo vim less curl ca-certificates psmisc htop kmod iproute2
 RUN rm -rf /etc/ssh/*key*
 RUN rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt
-COPY build/entry.sh build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
+COPY build/console.sh build/docker-init build/update-ssh-keys build/rancheros-install /usr/sbin/
 RUN locale-gen en_US.UTF-8
 RUN addgroup --gid 1100 rancher && \
     addgroup --gid 1101 docker && \
@@ -20,5 +20,5 @@ RUN addgroup --gid 1100 rancher && \
     ln -sf /usr/bin/docker-containerd.dist /usr/bin/docker-containerd && \
     ln -sf /usr/bin/docker-containerd-shim.dist /usr/bin/docker-containerd-shim && \
     ln -sf /usr/bin/docker-runc.dist /usr/bin/docker-runc
-ENTRYPOINT ["/usr/sbin/entry.sh"]
+ENTRYPOINT ["/usr/bin/ros", "entrypoint"]
 CMD ["/usr/sbin/console.sh"]
