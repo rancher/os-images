@@ -5,10 +5,6 @@ DIR=$(readlink /lib/modules/$(uname -r)/build)
 STAMP=${DIR}/.done
 VER=$(basename $DIR)
 
-if [ "$VER" = "Ubuntu-4.4.0-23.41-rancher2" ]; then
-    VER=Ubuntu-4.4.0-23.41-rancher2-2
-fi
-
 KERNEL_HEADERS_URL=${KERNEL_HEADERS_URL:-https://github.com/rancher/os-kernel/releases/download/${VER}/build.tar.gz}
 
 if [ -e $STAMP ]; then
