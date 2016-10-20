@@ -21,4 +21,3 @@ RUN addgroup --gid 1100 rancher && \
     ln -sf /usr/bin/docker-containerd-shim.dist /usr/bin/docker-containerd-shim && \
     ln -sf /usr/bin/docker-runc.dist /usr/bin/docker-runc
 ENTRYPOINT ["/usr/bin/ros", "entrypoint"]
-CMD ["/usr/sbin/console.sh"]
