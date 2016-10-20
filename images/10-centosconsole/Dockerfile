@@ -5,7 +5,7 @@ RUN yum upgrade -y && \
 RUN rm -rf /etc/ssh/*key*
 RUN rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt
 RUN ln -s /sbin/agetty /sbin/getty
-COPY build/update-ssh-keys build/rancheros-install /usr/sbin/
+COPY build/update-ssh-keys /usr/sbin/
 RUN localedef -c -f UTF-8 -i en_US en_US.UTF-8
 RUN groupadd --gid 1100 rancher && \
     groupadd --gid 1101 docker && \
