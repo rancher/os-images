@@ -17,4 +17,3 @@ RUN addgroup --gid 1100 rancher && \
     echo '## allow password less for docker user' >> /etc/sudoers && \
     echo 'docker ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 ENTRYPOINT ["/usr/bin/ros", "entrypoint"]
-CMD ["/usr/sbin/console.sh"]

@@ -18,4 +18,3 @@ RUN groupadd --gid 1100 rancher && \
     echo 'docker ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 COPY prompt.sh /etc/profile.d/
 ENTRYPOINT ["/usr/bin/ros", "entrypoint"]
-CMD ["/usr/sbin/console.sh"]
