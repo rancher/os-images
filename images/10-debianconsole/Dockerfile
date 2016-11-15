@@ -13,7 +13,7 @@ RUN locale-gen en_US.UTF-8 \
     && useradd -u 1101 -g docker -G docker,sudo -m -s /bin/bash docker \
     && echo ClientAliveInterval 180 >> /etc/ssh/sshd_config \
     && echo '## allow password less for rancher user' >> /etc/sudoers \
-    &&  echo 'rancher ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
+    && echo 'rancher ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
     && echo '## allow password less for docker user' >> /etc/sudoers \
     && echo 'docker ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 ENTRYPOINT ["/usr/bin/ros", "entrypoint"]
