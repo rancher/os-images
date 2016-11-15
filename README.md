@@ -30,7 +30,6 @@ into the container at run time:
 
 ```
 ENTRYPOINT ["/usr/bin/ros", "entrypoint"]
-CMD ["/usr/sbin/console.sh"]
 ```
 
 ## Misc details
