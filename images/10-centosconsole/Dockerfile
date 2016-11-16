@@ -4,7 +4,6 @@ RUN yum install -y iptables openssh-server rsync sudo vim less ca-certificates p
     && rm -rf /etc/ssh/*key* \
     && rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt \
     && ln -s /sbin/agetty /sbin/getty
-COPY build/update-ssh-keys /usr/sbin/
 RUN localedef -c -f UTF-8 -i en_US en_US.UTF-8 \
     && groupadd --gid 1100 rancher \
     && groupadd --gid 1101 docker \
