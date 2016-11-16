@@ -1,5 +1,5 @@
 FROM rancher/os-fedoraconsole-base
-# FROM amd64=fedora:23 arm64=rancher/aarch64-fedora:23 arm=skip
+# FROM amd64=fedora:24 arm64=resin/aarch64-fedora:24 arm=armv7/armhf-fedora:24
 RUN dnf install -y iptables openssh-server rsync sudo vim less ca-certificates psmisc htop procps-ng \
     && rm -rf /etc/ssh/*key* \
     && rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt \

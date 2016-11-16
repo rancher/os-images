@@ -1,5 +1,5 @@
 FROM rancher/os-debianconsole-base
-# FROM amd64=debian:jessie arm64=aarch64/debian:jessie arm=resin/rpi-raspbian:jessie
+# FROM amd64=debian:jessie arm64=aarch64/debian:jessie arm=armhf/debian:jessie
 RUN apt-get update \
     && apt-get install -y --no-install-recommends iptables openssh-server rsync locales sudo vim less curl ca-certificates psmisc htop kmod iproute2 \
     && rm -rf /var/lib/apt/lists/* \
