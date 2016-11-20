@@ -1,5 +1,5 @@
 FROM rancher/os-ubuntuconsole-base
-# FROM amd64=ubuntu:16.04 arm64=aarch64/ubuntu:16.04 arm=armhf/ubuntu:16.04
+# FROM amd64=ubuntu:16.10 arm64=aarch64/ubuntu:16.10 arm=armhf/ubuntu:16.10
 RUN apt-get update \
     && apt-get install -y --no-install-recommends iptables openssh-server rsync locales sudo vim less curl ca-certificates psmisc htop kmod iproute2 \
     && rm -rf /var/lib/apt/lists/* \
