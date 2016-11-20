@@ -5,7 +5,6 @@ RUN apk --no-cache add bash openssh iptables rsync sudo vim less curl ca-certifi
 RUN rm -rf /etc/ssh/*key*
 RUN rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt
 #RUN ln -s /sbin/getty /sbin/agetty
-COPY build/update-ssh-keys /usr/sbin/
 #RUN locale-gen en_US.UTF-8
 RUN addgroup -g 1100 rancher && \
     addgroup -g 1101 docker && \
