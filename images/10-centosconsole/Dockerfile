@@ -2,7 +2,6 @@ FROM rancher/os-centosconsole-base
 # FROM amd64=centos:7 arm64=skip arm=skip
 RUN yum install -y iptables openssh-server rsync sudo vim less ca-certificates psmisc htop procps-ng \
     && rm -rf /etc/ssh/*key* \
-    && rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt \
     && ln -s /sbin/agetty /sbin/getty
 RUN localedef -c -f UTF-8 -i en_US en_US.UTF-8 \
     && groupadd --gid 1100 rancher \

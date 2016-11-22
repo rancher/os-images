@@ -3,8 +3,7 @@ FROM rancher/os-ubuntuconsole-base
 RUN apt-get update \
     && apt-get install -y --no-install-recommends iptables openssh-server rsync locales sudo vim less curl ca-certificates psmisc htop kmod iproute2 \
     && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /etc/ssh/*key* \
-    && rm -fr /sbin/poweroff  /sbin/shutdown /sbin/reboot /sbin/halt /usr/sbin/poweroff  /usr/sbin/shutdown /usr/sbin/reboot /usr/sbin/halt
+    && rm -rf /etc/ssh/*key*
 RUN locale-gen en_US.UTF-8 \
     && addgroup --gid 1100 rancher \
     && addgroup --gid 1101 docker \
