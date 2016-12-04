@@ -53,5 +53,26 @@ RUN curl -fL ${!DOCKER_URL} > /usr/bin/docker && \
 RUN curl -sL https://releases.rancher.com/dapper/latest/dapper-`uname -s`-`uname -m | sed 's/arm.*/arm/'` > /usr/bin/dapper && \
     chmod +x /usr/bin/dapper
 
+# Download Docker engines
+RUN mkdir -p /assets/docker-1.10.3 && \
+    curl -sL https://get.docker.com/builds/Linux/x86_64/docker-1.10.3 > /assets/docker-1.10.3/docker && \
+    chmod +x /assets/docker-1.10.3/docker
+RUN mkdir -p /assets/docker-1.10.3_arm && \
+    curl -sL https://github.com/rancher/docker/releases/download/v1.10.3-arm/docker-1.10.3_arm > /assets/docker-1.10.3_arm/docker && \
+    chmod +x /assets/docker-1.10.3_arm/docker
+RUN mkdir -p /assets/docker-1.10.3_arm64 && \
+    curl -sL https://github.com/rancher/docker/releases/download/v1.10.3-arm64/docker-1.10.3_arm64 > /assets/docker-1.10.3_arm64/docker && \
+    chmod +x /assets/docker-1.10.3_arm/docker
+RUN curl -sfL https://get.docker.com/builds/Linux/x86_64/docker-1.11.2.tgz | tar xzf - -C /assets && \
+    mv /assets/docker /assets/docker-1.11.2
+RUN curl -sfL https://github.com/rancher/docker/releases/download/v1.11.2-ros1/docker-1.11.2_arm.tgz | tar xzf - -C /assets && \
+    mv /assets/docker /assets/docker-1.11.2_arm
+RUN curl -sfL https://github.com/rancher/docker/releases/download/v1.11.2-ros1/docker-1.11.2_arm64.tgz | tar xzf - -C /assets && \
+    mv /assets/docker /assets/docker-1.11.2_arm64
+RUN curl -sfL https://get.docker.com/builds/Linux/x86_64/docker-1.12.1.tgz | tar xzf - -C /assets && \
+    mv /assets/docker /assets/docker-1.12.1
+
+ENV TEST=1
+
 ENTRYPOINT ["./scripts/entry"]
 CMD ["ci"]

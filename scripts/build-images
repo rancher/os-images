@@ -12,7 +12,15 @@ mkdir -p dist
 
 for i in $BASE/[1-9]*; do
     name="os-$(echo ${i} | cut -f2 -d-)"
+
+    if [ "$name" == "os-docker" ]; then
+        # VERSION tag for docker engine images
+        IFS='-' read -ra dirname <<< "$i"
+        VERSION=${dirname[2]}
+    fi
+
     tag="${OS_REPO}/${name}:${VERSION}${SUFFIX}"
+    # TODO: try pulling an existing image first
     echo Building ${tag}
     if [ -e ${i}/prebuild.sh ]; then
         ${i}/prebuild.sh
